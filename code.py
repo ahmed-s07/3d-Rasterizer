@@ -49,10 +49,16 @@ def interpolate(i0, d0, i1, d1):
         i += 1
     return values
 
+def drawWireFrameTriangle(p0, p1, p2, color):
+    drawLine(p0, p1, color)
+    drawLine(p1, p2, color)
+    drawLine(p2, p0, color)
+
 pixels[:] = (0,0,0)
-point1 = [-200, -100]
-point2 = [-100, 300]
-drawLine(point1, point2, (255,255,255))
+p1 = [-200, -100]
+p2 = [-100, 300]
+p3 = [100, -200]
+drawWireFrameTriangle(p1, p2, p3, (255, 255, 255))
 
 running = True
 while running:
