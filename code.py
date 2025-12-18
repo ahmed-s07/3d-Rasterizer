@@ -15,32 +15,23 @@ def putPixel(x, y, color):
 def drawLine(p0, p1, color):
     if abs(p1[0] - p0[0]) > abs(p1[1] - p0[1]):
         if p0[0] > p1[0]:
-            temp = p0
-            p0 = p1
-            p1 = temp
-        y0 = p0[1]
-        x0 = p0[0]
-        y1 = p1[1]
-        x1 = p1[0]
+            p0, p1 = p1, p0
+        x0, y0 = p0
+        x1, y1 = p1
         ys = interpolate(x0, y0, x1, y1)
-        x = x0
-        while x <= x1:
+        for x in range(x0, x1+1):
             putPixel(x, int (ys[x - x0]), color)
-            x += 1
     else: 
         if p0[1] > p1[1]:
-            temp = p0
-            p0 = p1
-            p1 = temp
+            p0, p1 = p1, p0
         y0 = p0[1]
         x0 = p0[0]
         y1 = p1[1]
         x1 = p1[0]
         xs = interpolate(y0, x0, y1, x1)
-        y = y0
-        while y <= y1:
+        for y in range (y0, y1+1):
             putPixel(int (xs[y - y0]), y, color)
-            y += 1
+            
 
 
 
