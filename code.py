@@ -54,11 +54,36 @@ def drawWireFrameTriangle(p0, p1, p2, color):
     drawLine(p1, p2, color)
     drawLine(p2, p0, color)
 
+def fillTriangle(p0, p1, p2 ,color):
+    if p1[1] < p0[1]:
+        p1, p0 = p0, p1
+    if p2[1] < p0[1]:
+        p2, p0 = p0, p2
+    if p2[1] < p1[1]:
+        p2, p1 = p1, p2
+    x0, y0 = p0
+    x1, y1 = p1
+    x2, y2 = p2
+    long = interpolate(y0, x0, y2, x2)
+    short1 = interpolate(y0, x0, y1, x1)
+    short2 = interpolate(y1, x1, y2, x2)
+    short1.pop()
+    short = short1 + short2
+    print(long)
+    print(short)
+    for y in range(y0, y2):
+        p3 = [int (short[y-y0]), y]
+        p4 = [int(long[y-y0]), y]
+        drawLine(p3, p4, color)
+    
+
+
 pixels[:] = (0,0,0)
-p1 = [-200, -100]
-p2 = [-100, 300]
-p3 = [100, -200]
+p1 = [300, 100]
+p2 = [-100, 40]
+p3 = [100, 100]
 drawWireFrameTriangle(p1, p2, p3, (255, 255, 255))
+fillTriangle(p1, p2, p3, (255, 0, 0))
 
 running = True
 while running:
