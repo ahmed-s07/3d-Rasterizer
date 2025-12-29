@@ -9,7 +9,8 @@
 The goal of this project is to simulate how a GPU handles vertex processing, primitive assembly, and rasterization at a low level. `Pygame` is utilized solely for the final frame buffer display (blitting pixels to the window); all 3D logic is custom-written.
 
 ## 📸 Demo
-*(Note: Insert a screenshot or GIF of your wireframe cube here. See instructions below.)*
+<img width="746" height="746" alt="Screenshot 2025-12-29 at 1 30 45 AM" src="https://github.com/user-attachments/assets/4d1c6ca6-f166-49de-bc7d-fb63808b976a" />
+
 
 ## 🧠 Core Features & Architecture
 
