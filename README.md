@@ -1,4 +1,4 @@
-# PyRaster: Software 3D Rendering Engine
+# Software 3D Rendering Engine
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
