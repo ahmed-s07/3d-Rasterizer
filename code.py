@@ -147,7 +147,6 @@ drawLine(projectVertex(vBf), projectVertex(vCf), (0,0,255))
 drawLine(projectVertex(vCf), projectVertex(vDf), (0,0,255))
 drawLine(projectVertex(vDf), projectVertex(vAf), (0,0,255))
 
-
 drawLine(projectVertex(vAb), projectVertex(vBb), (255,0,0))
 drawLine(projectVertex(vBb), projectVertex(vCb), (255,0,0))
 drawLine(projectVertex(vCb), projectVertex(vDb), (255,0,0))
