@@ -131,7 +131,31 @@ def fillTriangle(p0, p1, p2 ,color):
 
 pixels[:] = (0,0,0)
 
+vAf = [-2, -0.5, 5]
+vBf = [-2,  0.5, 5]
+vCf = [-1,  0.5, 5]
+vDf = [-1, -0.5, 5]
 
+vAb = [-2, -0.5, 6]
+vBb = [-2,  0.5, 6]
+vCb = [-1,  0.5, 6]
+vDb = [-1, -0.5, 6]
+
+
+drawLine(projectVertex(vAf), projectVertex(vBf), (0,0,255))
+drawLine(projectVertex(vBf), projectVertex(vCf), (0,0,255))
+drawLine(projectVertex(vCf), projectVertex(vDf), (0,0,255))
+drawLine(projectVertex(vDf), projectVertex(vAf), (0,0,255))
+
+drawLine(projectVertex(vAb), projectVertex(vBb), (255,0,0))
+drawLine(projectVertex(vBb), projectVertex(vCb), (255,0,0))
+drawLine(projectVertex(vCb), projectVertex(vDb), (255,0,0))
+drawLine(projectVertex(vDb), projectVertex(vAb), (255,0,0))
+
+drawLine(projectVertex(vAf), projectVertex(vAb), (0,255,0))
+drawLine(projectVertex(vBf), projectVertex(vBb), (0,255,0))
+drawLine(projectVertex(vCf), projectVertex(vCb), (0,255,0))
+drawLine(projectVertex(vDf), projectVertex(vDb), (0,255,0))
 
 p0 = [200, -150, 1.0]
 p1 = [100, 40, 0.5]
