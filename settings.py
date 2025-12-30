@@ -1,0 +1,5 @@
+MAX_X = 750
+MAX_Y = 750
+VIEW_X = 750
+VIEW_Y = 750
+D = 700
