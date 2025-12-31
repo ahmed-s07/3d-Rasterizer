@@ -105,10 +105,36 @@ def fill_triangle(pixels, p0, p1, p2, color):
                     shaded = tuple(int(t * hseg[x - xl]) for t in color)
                     put_pixel(pixels, x, y, shaded)
 
-def renderObject(verticies, triangles, pixels):
+def render_Object(verticies, triangles, pixels):
     projected = []
     for i in verticies:
         projected.append(project_vertex(i))
     for e in triangles:
         draw_wireframe_triangle(pixels, projected[e[0]], projected[e[1]], projected[e[2]], e[3])
 
+class model:
+    name = "cube"
+    v0 = [1, 1, 1]
+    v1 = [-1, 1, 1]
+    v2 = [-1, -1, 1]
+    v3 = [1, -1, 1]
+    v4 = [1, 1, -1]
+    v5 = [-1, 1, -1]
+    v6 = [-1, -1, -1]
+    v7 = [1, -1, -1]
+
+    t0 = [0, 1, 2, red]
+    t1 = [0, 2, 3, red]
+    t2 = [4, 0, 3, green]
+    t3 = [4, 3, 7, blue]
+    t4 = [5, 4, 7, blue]
+    t5 = [5, 7, 6, blue]
+    t6 = [1, 5, 6, yellow]
+    t7 = [1, 6, 2, yellow]
+    t8 = [4, 5, 1, magenta]
+    t9 = [4, 1, 0, magenta]
+    t10 = [2, 6, 7, cyan]
+    t11 = [2, 7, 3, cyan]
+
+    verticies = [v0, v1, v2, v3, v4, v5, v6, v7]
+    triangles = [t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11]
