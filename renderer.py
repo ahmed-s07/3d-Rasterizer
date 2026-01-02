@@ -44,7 +44,6 @@ def project_vertex(v):
     return to_canvas([x, y])
 
 def draw_line(pixels, p0, p1, color):
-    # Logic remains the same, but we pass 'pixels' down to put_pixel
     if abs(p1[0] - p0[0]) > abs(p1[1] - p0[1]):
         if p0[0] > p1[0]:
             p0, p1 = p1, p0
@@ -119,7 +118,6 @@ def render_object(pixels, verticies, triangles):
         draw_wireframe_triangle(pixels, projected[e[0]], projected[e[1]], projected[e[2]], e[3])
 
 class cube:
-    
     t0 = [0, 1, 2, settings.red]
     t1 = [0, 2, 3, settings.red]
     t2 = [4, 0, 3, settings.green]
@@ -147,10 +145,10 @@ class cube:
         v6 = [-1, -1, -1]
         v7 = [1, -1, -1]
         self.verticies = [v0, v1, v2, v3, v4, v5, v6, v7]
-        vectorShift(self.verticies, position)
 
     
 
 def render_instance(pixels, instance):  
+    vectorShift(instance.verticies, instance.position)
     render_object(pixels, instance.verticies, instance.triangles)
 
