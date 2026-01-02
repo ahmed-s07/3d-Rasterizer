@@ -28,7 +28,6 @@ def matrix_vector(A, x):
 # for example the first column of AB would be the mstrix vector product of A and the first column of B
 
 def matrix_mult(A, B):
-    lengthA = len(A)
     lengthB = len(B)
     AB = []
 
@@ -36,23 +35,27 @@ def matrix_mult(A, B):
         AB.append(matrix_vector(A, B[v]))
     return AB
 
-        
+def no_homo(v):
+    length = len(v)
+    w = v[length-1]
+    scaled = []
+    for x in range(length-1):
+        scaled.append(v[x]//w)
+    return scaled
 
-v1 = [1,0,2]
+v1 = [1, 0, 0]
+v2 = [0, 1, 0]
+v3 = [0, 0, 1]
+v4 = [0, 0, 0]
+A = [v1,v2,v3,v4]
 
-e1 = [1,0,0] 
-e2 = [0,2,0] 
-e3 = [0,0,1]
-I = [e1,e2,e3]
+e1 = [3,4,5,6]
+e2 = [1,2,3,4]
+e3 = [6,6,7,8]
+e4 = [2,3,4,5]
+B = [e1,e2,e3,e4]
 
-a1 = [3,2,4]
-a2 = [0,9,4]
-a3 = [3,4,5]
-A = [a1,a2,a3]
-
-AE = matrix_mult(A,I)
-print(AE)
-
+print(matrix_mult(A, B))
 
 
 

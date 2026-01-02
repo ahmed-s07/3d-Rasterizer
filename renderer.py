@@ -1,5 +1,7 @@
 # renderer.py
 import settings
+import matrix as m
+import math
 def interpolate(i0, d0, i1, d1):
     if i0 == i1:
         return [d0]
@@ -133,8 +135,10 @@ class cube:
 
     triangles = [t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11]
 
-    def __init__(self, position):
+    def __init__(self, scale, angle, position):
         self.position = position
+        self.scale = scale
+        self.angle = angle
         self.triangles = cube.triangles
         v0 = [1, 1, 1]
         v1 = [-1, 1, 1]
@@ -146,9 +150,40 @@ class cube:
         v7 = [1, -1, -1]
         self.verticies = [v0, v1, v2, v3, v4, v5, v6, v7]
 
-    
+def rotation_matrix(angle):
+    v1 = [math.cos(angle), 0, -1*math.sin(angle),0]
+    v2 = [0, 1, 0, 0]
+    v3 = [math.sin(angle), 0, math.cos(angle),0]
+    v4 = [0, 0, 0, 1]
+    return [v1, v2, v3, v4]
+def scale_matrix(scale):
+    v1 = [scale, 0, 0, 0]
+    v2 = [0, scale, 0, 0]
+    v3 = [0, 0, scale, 0]
+    v4 = [0, 0, 0, 1]
+    return [v1, v2, v3, v4]
+def translation_matrix(position):
+    v1 = [1, 0, 0, 0]
+    v2 = [0, 1, 0, 0]
+    v3 = [0, 0, 1, 0]
+    v4 = [position[0], position[1], position[2], 1]
+    return [v1, v2, v3, v4]
+def projection_matrix(d):
+    v1 = [d*(settings.MAX_X//settings.VIEW_X), 0, 0]
+    v2 = [0, d*(settings.MAX_Y//settings.VIEW_Y), 0]  
+    v3 = [0, 0, 1]
+    v4 = [0, 0, 0]
+
+
 
 def render_instance(pixels, instance):  
-    vectorShift(instance.verticies, instance.position)
-    render_object(pixels, instance.verticies, instance.triangles)
+    rotation = rotation_matrix(instance.angle)   
+    scale = scale_matrix(instance.scale)
+    translate = translation_matrix(instance.position)
+    project = projection_matrix(settings.D)
+    a1 = m.matrix_mult(project, translate)
+    a2 = m.matrix_mult(a1, scale)
+    a3 = m.matrix_mult(a2, rotation)
+    print(a3)
+
 

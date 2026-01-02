@@ -18,10 +18,10 @@ pixels[:] = (0, 0, 0)
 
 T = [-1.5, 0, 7]
 
-bruh = r.cube(position=T)
-bruh2 = r.cube(position=[1.5, 0, 50])
+bruh = r.cube(1, (3.14/4), T)
 r.render_instance(pixels, bruh)
-r.render_instance(pixels, bruh2)
+
+
 
 
 # --- Main Loop ---
