@@ -41,21 +41,18 @@ def no_homo(v):
     scaled = []
     for x in range(length-1):
         scaled.append(v[x]//w)
+    scaled.append(1.0)
     return scaled
 
-v1 = [1, 0, 0]
+v1 = [0.7073882691671998, 0, -0.706825181105366]
 v2 = [0, 1, 0]
-v3 = [0, 0, 1]
-v4 = [0, 0, 0]
-A = [v1,v2,v3,v4]
+v3 = [0.706825181105366, 0, 0.706825181105366]
+A = [v1,v2,v3]
 
-e1 = [3,4,5,6]
-e2 = [1,2,3,4]
-e3 = [6,6,7,8]
-e4 = [2,3,4,5]
-B = [e1,e2,e3,e4]
+v = [1,1,1]
 
-print(matrix_mult(A, B))
+
+print(matrix_vector(A, v))
 
 
 

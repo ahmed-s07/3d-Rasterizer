@@ -18,8 +18,11 @@ pixels[:] = (0, 0, 0)
 
 T = [-1.5, 0, 7]
 
-bruh = r.cube(1, (3.14/4), T)
-r.render_instance(pixels, bruh)
+
+bruh = r.cube(1, 1, T)
+print(bruh.verticies)
+r.render_object(pixels, bruh)
+#r.render_instance(pixels, bruh)
 
 
 

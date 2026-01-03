@@ -40,7 +40,7 @@ def to_canvas(a):
 
 def project_vertex(v):
     # Avoid division by zero
-    z = v[2] if v[2] != 0 else 1 
+    z = v[2]
     x = int((v[0] * settings.D) / z)
     y = int((v[1] * settings.D) / z)
     return to_canvas([x, y])
@@ -112,11 +112,32 @@ def fill_triangle(pixels, p0, p1, p2, color):
                     shaded = tuple(int(t * hseg[x - xl]) for t in color)
                     put_pixel(pixels, x, y, shaded)
 
-def render_object(pixels, verticies, triangles):
+def render_object(pixels, instance):
+    A = rotation_matrix(3.14/4)
+    B = scale_matrix(0.5)
+    print("Matrix")
+    print(A)
+    rotated = []
+    for v in instance.verticies:
+        rotated.append(m.matrix_vector(A,v))
+    print("rotated")
+    print(rotated)
+    scaled = []
+    for v in rotated:
+        scaled.append(m.matrix_vector(B,v))
+    print("scaled")
+    print(scaled)
+    shifted = []
+    for v in scaled:
+        shifted.append(m.vector_add(v, instance.position))
+    print("shifted")
+    print(shifted)
     projected = []
-    for i in verticies:
+    for i in shifted:
         projected.append(project_vertex(i))
-    for e in triangles:
+    print("projected")
+    print(projected)
+    for e in instance.triangles:
         draw_wireframe_triangle(pixels, projected[e[0]], projected[e[1]], projected[e[2]], e[3])
 
 class cube:
@@ -149,30 +170,34 @@ class cube:
         v6 = [-1, -1, -1]
         v7 = [1, -1, -1]
         self.verticies = [v0, v1, v2, v3, v4, v5, v6, v7]
-
+#4X4
 def rotation_matrix(angle):
-    v1 = [math.cos(angle), 0, -1*math.sin(angle),0]
-    v2 = [0, 1, 0, 0]
-    v3 = [math.sin(angle), 0, math.cos(angle),0]
+    v1 = [math.cos(angle), 0, -1*math.sin(angle)]
+    v2 = [0, 1, 0]
+    v3 = [math.sin(angle), 0, math.cos(angle)]
     v4 = [0, 0, 0, 1]
-    return [v1, v2, v3, v4]
+    return [v1, v2, v3]
+#4X4
 def scale_matrix(scale):
-    v1 = [scale, 0, 0, 0]
-    v2 = [0, scale, 0, 0]
-    v3 = [0, 0, scale, 0]
+    v1 = [scale, 0, 0]
+    v2 = [0, scale, 0]
+    v3 = [0, 0, scale]
     v4 = [0, 0, 0, 1]
-    return [v1, v2, v3, v4]
+    return [v1, v2, v3]
+#4X4
 def translation_matrix(position):
     v1 = [1, 0, 0, 0]
     v2 = [0, 1, 0, 0]
     v3 = [0, 0, 1, 0]
     v4 = [position[0], position[1], position[2], 1]
     return [v1, v2, v3, v4]
+#3X4
 def projection_matrix(d):
     v1 = [d*(settings.MAX_X//settings.VIEW_X), 0, 0]
     v2 = [0, d*(settings.MAX_Y//settings.VIEW_Y), 0]  
     v3 = [0, 0, 1]
     v4 = [0, 0, 0]
+    return [v1,v2,v3,v4]
 
 
 
@@ -184,6 +209,18 @@ def render_instance(pixels, instance):
     a1 = m.matrix_mult(project, translate)
     a2 = m.matrix_mult(a1, scale)
     a3 = m.matrix_mult(a2, rotation)
-    print(a3)
+    projected = []
+    for x in range(8):
+        projected.append(m.no_homo(m.matrix_vector(a3, instance.verticies[x])))
+    print(projected)
+    print(instance.triangles)
+    print(projected[0])
+    print(projected[1])
+    print(projected[2])
+    draw_wireframe_triangle(pixels, projected[0], projected[1], projected[2], settings.red)
+    for e in instance.triangles:
+        draw_wireframe_triangle(pixels, projected[e[0]], projected[e[1]], projected[e[2]], e[3])
+
+
 
 
