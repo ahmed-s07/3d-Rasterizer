@@ -40,7 +40,7 @@ def no_homo(v):
     w = v[length-1]
     scaled = []
     for x in range(length-1):
-        scaled.append(v[x]//w)
+        scaled.append(int(v[x]/w))
     scaled.append(1.0)
     return scaled
 

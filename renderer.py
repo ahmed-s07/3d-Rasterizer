@@ -115,6 +115,8 @@ def fill_triangle(pixels, p0, p1, p2, color):
 def render_object(pixels, instance):
     A = rotation_matrix(3.14/4)
     B = scale_matrix(0.5)
+    C = translation_matrix(instance.position)
+    D = projection_matrix(settings.D)
     print("Matrix")
     print(A)
     rotated = []
@@ -129,12 +131,12 @@ def render_object(pixels, instance):
     print(scaled)
     shifted = []
     for v in scaled:
-        shifted.append(m.vector_add(v, instance.position))
+        shifted.append(m.matrix_vector(C, v))
     print("shifted")
     print(shifted)
     projected = []
     for i in shifted:
-        projected.append(project_vertex(i))
+        projected.append(m.no_homo(m.matrix_vector(D, i)))
     print("projected")
     print(projected)
     for e in instance.triangles:
@@ -161,29 +163,29 @@ class cube:
         self.scale = scale
         self.angle = angle
         self.triangles = cube.triangles
-        v0 = [1, 1, 1]
-        v1 = [-1, 1, 1]
-        v2 = [-1, -1, 1]
-        v3 = [1, -1, 1]
-        v4 = [1, 1, -1]
-        v5 = [-1, 1, -1]
-        v6 = [-1, -1, -1]
-        v7 = [1, -1, -1]
+        v0 = [1, 1, 1,1]
+        v1 = [-1, 1, 1,1]
+        v2 = [-1, -1, 1,1]
+        v3 = [1, -1, 1,1]
+        v4 = [1, 1, -1,1]
+        v5 = [-1, 1, -1,1]
+        v6 = [-1, -1, -1,1]
+        v7 = [1, -1, -1,1]
         self.verticies = [v0, v1, v2, v3, v4, v5, v6, v7]
 #4X4
 def rotation_matrix(angle):
-    v1 = [math.cos(angle), 0, -1*math.sin(angle)]
-    v2 = [0, 1, 0]
-    v3 = [math.sin(angle), 0, math.cos(angle)]
+    v1 = [math.cos(angle), 0, -1*math.sin(angle), 0]
+    v2 = [0, 1, 0, 0]
+    v3 = [math.sin(angle), 0, math.cos(angle), 0]
     v4 = [0, 0, 0, 1]
-    return [v1, v2, v3]
+    return [v1, v2, v3, v4]
 #4X4
 def scale_matrix(scale):
-    v1 = [scale, 0, 0]
-    v2 = [0, scale, 0]
-    v3 = [0, 0, scale]
+    v1 = [scale, 0, 0, 0]
+    v2 = [0, scale, 0, 0]
+    v3 = [0, 0, scale, 0]
     v4 = [0, 0, 0, 1]
-    return [v1, v2, v3]
+    return [v1, v2, v3, v4]
 #4X4
 def translation_matrix(position):
     v1 = [1, 0, 0, 0]
@@ -193,11 +195,16 @@ def translation_matrix(position):
     return [v1, v2, v3, v4]
 #3X4
 def projection_matrix(d):
-    v1 = [d*(settings.MAX_X//settings.VIEW_X), 0, 0]
-    v2 = [0, d*(settings.MAX_Y//settings.VIEW_Y), 0]  
+    v1 = [d, 0, 0]
+    v2 = [0, d, 0]  
     v3 = [0, 0, 1]
     v4 = [0, 0, 0]
     return [v1,v2,v3,v4]
+def veiw_matrix():
+    v1 = [settings.MAX_X//settings.VIEW_X, 0, 0]
+    v2 = [0, settings.MAX_Y//settings.VIEW_Y, 0]
+    v3 = [0, 0, 0]
+    return [v1,v2,v3]
 
 
 
@@ -206,6 +213,7 @@ def render_instance(pixels, instance):
     scale = scale_matrix(instance.scale)
     translate = translation_matrix(instance.position)
     project = projection_matrix(settings.D)
+    veiw = veiw_matrix()
     a1 = m.matrix_mult(project, translate)
     a2 = m.matrix_mult(a1, scale)
     a3 = m.matrix_mult(a2, rotation)
