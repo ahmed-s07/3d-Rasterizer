@@ -205,7 +205,8 @@ def veiw_matrix():
     v2 = [0, settings.MAX_Y//settings.VIEW_Y, 0]
     v3 = [0, 0, 0]
     return [v1,v2,v3]
-
+def rotation_x():
+    
 
 
 def render_instance(pixels, instance):  
@@ -217,6 +218,7 @@ def render_instance(pixels, instance):
     a1 = m.matrix_mult(scale, rotation)
     a2 = m.matrix_mult(translate, a1)
     a3 = m.matrix_mult(project, a2)
+    a4 = m.matrix_mult(veiw, a3)
     projected = []
     for x in range(8):
         projected.append(m.no_homo(m.matrix_vector(a3, instance.verticies[x])))
