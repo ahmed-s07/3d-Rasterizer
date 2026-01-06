@@ -18,8 +18,8 @@ pixels[:] = (0, 0, 0)
 angle = 0.0
 rotation_speed = 0.01
 
-T = [-1.5, 0, 7]
-
+T = [1.5, 0, 7]
+Q = [-1.5, 0, 7]
 
 bruh = r.cube(1, 0, T)
 print(bruh.verticies)
@@ -40,7 +40,8 @@ while running:
         angle -= 2 * math.pi
 
     pixels[:] = (0, 0, 0)
-    cube = r.cube(1, angle, T)
+    cube = r.cube(1, angle, Q)
+    r.render_instance(pixels, bruh)
     r.render_instance(pixels, cube)
 
     
