@@ -214,9 +214,9 @@ def render_instance(pixels, instance):
     translate = translation_matrix(instance.position)
     project = projection_matrix(settings.D)
     veiw = veiw_matrix()
-    a1 = m.matrix_mult(project, translate)
-    a2 = m.matrix_mult(a1, scale)
-    a3 = m.matrix_mult(a2, rotation)
+    a1 = m.matrix_mult(scale, rotation)
+    a2 = m.matrix_mult(translate, a1)
+    a3 = m.matrix_mult(project, a2)
     projected = []
     for x in range(8):
         projected.append(m.no_homo(m.matrix_vector(a3, instance.verticies[x])))
