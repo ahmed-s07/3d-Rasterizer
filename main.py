@@ -19,7 +19,7 @@ angle = 0.0
 rotation_speed = 0.01
 
 T = [1.5, 0, 7]
-Q = [-1.5, 0, 7]
+Q = [-1.5, 0, 8]
 
 bruh = r.cube(1, 0, T)
 print(bruh.verticies)
